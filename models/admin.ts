@@ -31,9 +31,6 @@ const adminSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    isLoggedIn: {
-      type: Boolean,
-    },
   },
   { timestamps: true }
 );

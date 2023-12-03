@@ -20,6 +20,8 @@ import {
   Smartphone,
 } from "@mui/icons-material";
 import { AdminProfileProps, ErrorProps } from "@/utils/props";
+import LoadingIcon from "@/components/LoadingIcon";
+import { useRouter } from "next/navigation";
 
 const defaultAdmin: AdminProfileProps = {
   name: "",
@@ -37,6 +39,8 @@ const Setup = () => {
   const [error, setError] = useState<ErrorProps>({});
   const [notice, setNotice] = useState(getNotice());
 
+  const router = useRouter();
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
   ) => {
@@ -48,7 +52,7 @@ const Setup = () => {
 
   const handleSubmit = (form: FormEvent) => {
     form.preventDefault();
-
+    setLoading(true);
     setNotice(getNotice());
 
     fetch(`/api/admins`, {
@@ -66,7 +70,14 @@ const Setup = () => {
           message = response.message;
           severity = "success";
         }
+
         setNotice({ message, severity });
+
+        if (!response?.error) {
+          router.push("/login");
+          router.refresh();
+        }
+        setLoading(false);
       });
   };
 
@@ -152,7 +163,12 @@ const Setup = () => {
 
           <RenderInputs inputs={inputs} handleChange={handleChange} />
 
-          <Button type="submit" variant="contained" disabled={loading}>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={loading}
+            endIcon={loading && <LoadingIcon />}
+          >
             Start
           </Button>
 
