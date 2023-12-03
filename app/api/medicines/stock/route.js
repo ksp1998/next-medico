@@ -1,4 +1,5 @@
 import Stock from "@/models/stock";
+import Medicine from "@/models/medicine";
 import Supplier from "@/models/supplier";
 import Purchase from "@/models/purchase";
 import dbConnection from "@/utils/dbConnection";

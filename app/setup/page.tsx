@@ -20,7 +20,6 @@ const SetupPage = async () => {
     // const response = await (await fetch(`${siteURL}/api/admins`)).json();
     await dbConnection();
     adminCount = await Admin.find({}).count();
-    redirect("/login");
   } catch (error: any | unknown) {
   } finally {
     if (adminCount > 0) {
