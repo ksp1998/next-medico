@@ -1,0 +1,360 @@
+@import "variables";
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: $primary-background-color;
+}
+
+.form-control:focus,
+.btn:focus-visible {
+  box-shadow: 0 0 0 1px $primary-focus-color;
+}
+
+.side-nav {
+  width: $navbar-width;
+  min-width: $navbar-min-width;
+  height: 100vh;
+  background-color: $navbar-color;
+  position: fixed;
+  z-index: 1;
+  flex: 1 0 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  .nav-content {
+    height: 100%;
+
+    .nav-body {
+      width: 100%;
+      bottom: 0;
+      border-radius: 0;
+
+      .logo {
+        .profile {
+          margin-left: 50%;
+          border-radius: 50%;
+          transform: translate(-50%);
+        }
+
+        .logo-caption {
+          color: #ffffff;
+          text-align: center;
+
+          &::first-letter {
+            color: $primary-color;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .nav-items {
+        list-style-type: none;
+        padding: 0;
+
+        .nav-item {
+          cursor: pointer;
+          overflow: hidden;
+
+          & > .link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.4em;
+            padding: 0.4em 1em;
+            color: $text-light-color;
+            text-decoration: none;
+            font-size: 1rem;
+
+            .title {
+              flex-grow: 1;
+            }
+
+            .expand {
+              transition: rotate 250ms ease-in-out;
+            }
+
+            &:hover {
+              color: $primary-color;
+            }
+          }
+
+          .treeview-items {
+            display: none;
+            margin-bottom: 0.4em;
+
+            .treeview-item {
+              .link {
+                font-size: 0.8rem;
+                padding: 0.2em 0.2em 0.2em 3em;
+              }
+            }
+          }
+
+          &.expanded {
+            .treeview-items {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.menu-list .btn {
+  color: white;
+  text-align: left;
+  font-size: 0.9em;
+  border-radius: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+.menu-list .btn:hover {
+  color: $primary-color;
+}
+
+.footer {
+  padding-top: 10px;
+  margin-left: $navbar-width;
+  width: calc(100% - $navbar-width);
+  background: #111111;
+  position: relative;
+  bottom: 0;
+  z-index: 1;
+}
+
+html,
+body {
+  height: 100vh;
+}
+
+.container-fluid {
+  background: $primary-background-color;
+  width: auto;
+  padding: 0 0 1em 0;
+
+  &.logged-in {
+    margin-left: max($navbar-width, $navbar-min-width);
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+  }
+}
+
+.container {
+  margin: 1em;
+  width: calc(100% - 2em);
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.header-nav {
+  button {
+    background-color: transparent;
+    color: $primary-color;
+    border: none;
+    outline: none;
+
+    & > svg:hover {
+      animation-name: rotate_gear;
+      animation-duration: 2s;
+    }
+  }
+
+  @keyframes rotate_gear {
+    0% {
+      rotate: 0deg;
+    }
+    100% {
+      rotate: 360deg;
+    }
+  }
+
+  button:focus {
+    color: $primary-focus-color;
+  }
+
+  .nav-items {
+    position: fixed;
+    right: 1%;
+    top: 10%;
+    background-color: $navbar-color;
+    border-radius: 10px;
+    z-index: 1;
+    animation: slide 250ms normal;
+
+    @keyframes slide {
+      0% {
+        opacity: 0;
+        translate: 0 -2.5em;
+      }
+      100% {
+        opacity: 1;
+        translate: 0;
+      }
+    }
+
+    li > a {
+      color: #eeeeee;
+      text-decoration: none;
+
+      &:hover {
+        color: $primary-color;
+      }
+
+      &:focus {
+        color: $primary-focus-color;
+      }
+    }
+  }
+}
+
+.dashboard-stats {
+  background-color: $primary-background-color;
+  border: 1px solid $primary-focus-color;
+}
+
+.todays-report {
+  border: 1px solid $primary-color;
+}
+
+#add_new_customer_model,
+#add_new_supplier_model,
+#add_new_medicine_model {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal-dialog {
+  position: fixed;
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $primary-background-color;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $primary-color;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url(/images/pills2.jpg) no-repeat center / cover;
+
+  &.setup-form {
+    background-image: url(/images/cap.jpg);
+  }
+
+  .form-card {
+    margin-top: 5em;
+    margin-bottom: 5em;
+    background-color: #fff;
+    border-radius: 0.25em;
+    padding: 2em;
+    width: 340px;
+    min-width: max(40%, 340px);
+
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .logo {
+        h1,
+        h2 {
+          display: flex;
+          font-family: "Poiret One", cursive;
+          justify-content: center;
+          gap: 0.2em;
+
+          span {
+            display: block;
+          }
+
+          span::first-letter {
+            color: #ff5252;
+          }
+        }
+
+        h1 {
+          font-weight: 500;
+          margin-top: 0.25em;
+        }
+
+        h2 {
+          margin-bottom: 0.75em;
+        }
+
+        .img {
+          margin-left: 50%;
+          border-radius: 50%;
+          transform: translate(-50%);
+        }
+      }
+
+      button[type="submit"] {
+        background-color: #ff5252;
+        color: white;
+
+        &:disabled {
+          opacity: 0.8;
+        }
+      }
+    }
+
+    .form-card-footer {
+      margin-top: 1em;
+      padding-top: 0.75em;
+      text-align: center;
+      border-top: 1px solid lightgrey;
+
+      .link {
+        text-decoration: none;
+      }
+    }
+  }
+}
