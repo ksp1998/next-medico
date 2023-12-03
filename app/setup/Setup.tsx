@@ -72,7 +72,7 @@ const Setup = () => {
 
   const inputs = [
     {
-      label: "Pharmacy's Name",
+      label: "Medico Title",
       name: "name",
       value: admin.name,
       error: error.name,
@@ -140,13 +140,13 @@ const Setup = () => {
               alt=""
             />
             <h1>
-              <span>Pharmacy</span> <span>Management</span>
+              <span>Medico</span>
             </h1>
             <h2>
               <span>One</span> <span>Time</span> <span>Setup</span>
             </h2>
             <p style={{ textAlign: "center" }}>
-              Enter necessary pharmacy details
+              Enter necessary medico details
             </p>
           </div>
 

@@ -58,7 +58,7 @@ const FormAdminProfile = ({ currentAdmin, errorMessage = "" }: Props) => {
 
   const inputs = [
     {
-      label: "Pharmacy's Name",
+      label: "Medico's Title",
       name: "name",
       value: admin?.name,
       error: error?.name,

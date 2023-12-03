@@ -110,7 +110,7 @@ const FormInput = ({
         <TextField
           label={label}
           type={type === "password" ? (showPassword ? "text" : type) : type}
-          id={id}
+          id={id || name}
           name={name}
           placeholder={placeholder}
           value={value}
@@ -119,7 +119,7 @@ const FormInput = ({
           multiline={type === "textarea"}
           rows={type === "textarea" ? 3 : 1}
           disabled={disabled}
-          autoComplete={type === "password" ? "on" : ""}
+          autoComplete={type === "password" ? "off" : "on"}
         />
       );
   }
