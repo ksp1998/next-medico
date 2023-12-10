@@ -5,34 +5,33 @@ import {
   Dispatch,
   FormEvent,
   SetStateAction,
-  useEffect,
   useState,
 } from "react";
-import { CustomerProps, ErrorProps } from "@/utils/props";
+import {
+  CustomerProps,
+  ErrorProps,
+  InputProps,
+  NoticeProps,
+} from "@/utils/props";
 import { boxStyle, getCustomers, getNotice, validate } from "@/utils/functions";
-import { Alert, Box, Button, SelectChangeEvent, Skeleton } from "@mui/material";
+import { Alert, Box, Button, SelectChangeEvent } from "@mui/material";
 import { AccountCircle, ContactMail, Smartphone } from "@mui/icons-material";
 import RenderInputs from "../RenderInputs";
+import { defaultCustomer } from "@/utils/defaults";
+import LoadingIcon from "../LoadingIcon";
 
 interface Props {
   initialCustomer?: CustomerProps;
+  initialNotice?: NoticeProps;
   customerId?: String | undefined;
   btnLabel?: String;
   formTitle?: string;
   updateCustomers?: Dispatch<SetStateAction<never[]>> | null;
 }
 
-const defaultCustomer = {
-  name: "",
-  number: "",
-  address: "",
-  doctorName: "",
-  doctorAddress: "",
-};
-
 const FormCustomer = ({
   initialCustomer = defaultCustomer,
-  customerId,
+  initialNotice = getNotice(),
   btnLabel = "Add",
   formTitle = "",
   updateCustomers = null,
@@ -40,34 +39,7 @@ const FormCustomer = ({
   const [customer, setCustomer] = useState(initialCustomer || defaultCustomer);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorProps>({});
-  const [notice, setNotice] = useState(getNotice());
-
-  useEffect(() => {
-    const fetchCustomer = async () => {
-      setLoading(true);
-      try {
-        const url = `/api/customers/${customerId}`;
-        const response = await fetch(url);
-        const customer = await response.json();
-        if (!customer.error) {
-          setCustomer(customer);
-        } else {
-          setNotice({
-            message: customer.error,
-            severity: "error",
-          });
-        }
-      } catch (error: any | unknown) {
-        setNotice({
-          message: error.message,
-          severity: "error",
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-    customerId && fetchCustomer();
-  }, [customerId]);
+  const [notice, setNotice] = useState(initialNotice);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
@@ -82,6 +54,7 @@ const FormCustomer = ({
   const handleSubmit = (form: FormEvent) => {
     form.preventDefault();
 
+    setLoading(true);
     setNotice(getNotice());
 
     fetch(`/api/customers`, {
@@ -96,20 +69,21 @@ const FormCustomer = ({
           severity: response?.error ? "error" : "success",
         });
 
-        if (!customerId && !response?.error) {
+        if (!customer._id && !response?.error) {
           setCustomer(defaultCustomer);
         }
 
         if (!response?.error && updateCustomers !== null) {
           (async () => updateCustomers(await getCustomers()))();
         }
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const isError =
     Object.entries(error).filter((err) => err[1] !== "").length > 0;
 
-  const inputs = [
+  const inputs: InputProps[] = [
     {
       label: "Customer's Name",
       name: "name",
@@ -165,22 +139,8 @@ const FormCustomer = ({
       )}
 
       <form onSubmit={handleSubmit}>
-        {loading &&
-          Array.from(Array(5)).map((t, i) => {
-            return (
-              <Skeleton
-                key={i}
-                variant="rounded"
-                height={i == 2 || i == 4 ? 150 : 50}
-                sx={{ mb: 3 }}
-              />
-            );
-          })}
-
         {/* customer details content */}
-        {!loading && (
-          <RenderInputs inputs={inputs} handleChange={handleChange} />
-        )}
+        <RenderInputs inputs={inputs} handleChange={handleChange} />
         {/* customer details content end */}
 
         {/* form submit button */}
@@ -190,6 +150,7 @@ const FormCustomer = ({
               type="submit"
               variant="contained"
               disabled={isError || loading}
+              endIcon={loading && <LoadingIcon />}
             >
               {btnLabel}
             </Button>

@@ -9,14 +9,20 @@ import FormInput from "../FormInput";
 import { DateRange, Sync } from "@mui/icons-material";
 import ManageTable from "../ManageTable";
 import SalesReportRow from "./SalesReportRow";
+import { useFetchData } from "@/utils/hooks";
 
 const SalesReport = () => {
-  const [invoices, setInvoices] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0);
-  const [notice, setNotice] = useState(getNotice());
   const [params, setParams] = useState(defaultTableParams);
-  const [totalSales, setTotalSales] = useState(0);
+
+  const {
+    data: invoices,
+    count,
+    loading,
+    error: notice,
+    response,
+  } = useFetchData("/api/invoices", params);
+
+  const totalSales = response?.salesTotal ?? 0;
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
@@ -24,25 +30,6 @@ const SalesReport = () => {
     const { name, value } = e.target;
     setParams((prev) => ({ ...prev, [name]: value }));
   };
-
-  const loadSales = async () => {
-    setLoading(true);
-    setNotice(getNotice());
-    const searchParams = new URLSearchParams(params);
-    const response = await apiGet(`/api/invoices?${searchParams}`);
-    if (response.invoices) {
-      setInvoices(response?.invoices ?? []);
-      setCount(response?.count);
-      setTotalSales(response.salesTotal ?? 0);
-    } else {
-      setNotice({ message: response.error, severity: "error" });
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    loadSales();
-  }, [params]);
 
   const columns: ColumnProps[] = [
     { id: "#", label: "#" },

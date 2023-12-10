@@ -224,7 +224,11 @@ body {
 }
 
 .todays-report {
-  border: 1px solid $primary-color;
+  border: 2px solid $primary-color;
+
+  .border-top-dark {
+    border-top: 2px solid $primary-color;
+  }
 }
 
 #add_new_customer_model,

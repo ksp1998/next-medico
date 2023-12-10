@@ -9,7 +9,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { boxStyle } from "@/utils/functions";
+import { apiFetch, boxStyle } from "@/utils/functions";
 import DashboardStatsCard from "./DashboardStatsCard";
 import { DashboardSectionProps } from "@/utils/props";
 import { useEffect, useState } from "react";
@@ -26,15 +26,13 @@ const DashboardStats = () => {
   });
 
   useEffect(() => {
-    (async () => {
-      let response = await fetch("api/reports?today=1");
-      const today = await response.json();
+    apiFetch("api/reports?today=1", 0).then(({ data: today }) =>
+      setReports((prev) => ({ ...prev, today }))
+    );
 
-      response = await fetch("api/reports");
-      const all = await response.json();
-
-      setReports({ today, all });
-    })();
+    apiFetch("api/reports", 0).then(({ data: all }) =>
+      setReports((prev) => ({ ...prev, all }))
+    );
   }, []);
 
   const cards: DashboardSectionProps[] = [
@@ -80,7 +78,7 @@ const DashboardStats = () => {
             className="mt-2 rounded overflow-hidden todays-report text-bold"
             sx={{ td: { fontWeight: "bold", fontSize: 18 } }}
           >
-            <Table aria-label="Today's report">
+            <Table aria-label="Reports">
               <TableHead>
                 <TableRow>
                   <TableCell
@@ -88,21 +86,33 @@ const DashboardStats = () => {
                     align="center"
                     sx={{ fontSize: 22, fontWeight: "bold", padding: 3 }}
                   >
-                    Today&apos;s Report
+                    Reports
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
-                  <TableCell>Total Sales</TableCell>
+                <TableRow className="border-top-dark">
+                  <TableCell>Today&apos;s Sales</TableCell>
                   <TableCell className="text-success">
                     Rs. {reports.today.sale.totalAmount.toFixed(2)}
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Total Purchase</TableCell>
+                  <TableCell>Today&apos;s Purchase</TableCell>
                   <TableCell className="text-danger">
                     Rs. {reports.today.purchase.totalAmount.toFixed(2)}
+                  </TableCell>
+                </TableRow>
+                <TableRow className="border-top-dark">
+                  <TableCell>Total Sales</TableCell>
+                  <TableCell className="text-success">
+                    Rs. {reports.all.sale.totalAmount.toFixed(2)}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Total Purchase</TableCell>
+                  <TableCell className="text-danger">
+                    Rs. {reports.all.purchase.totalAmount.toFixed(2)}
                   </TableCell>
                 </TableRow>
               </TableBody>

@@ -52,7 +52,7 @@ export async function GET(req, res) {
 
     const purchasesCount = await Purchase.find(findParams).count();
 
-    const salesTotal = await Purchase.aggregate([
+    const purchaseTotal = await Purchase.aggregate([
       { $match: { date: { $gte: start, $lt: end } } },
       { $group: { _id: null, totalAmount: { $sum: "$amount" } } },
     ]);
@@ -60,7 +60,7 @@ export async function GET(req, res) {
     return sendResponseSuccess("Purchases fetched successfully...", {
       count: purchasesCount,
       purchases,
-      salesTotal: salesTotal[0]?.totalAmount,
+      purchaseTotal: purchaseTotal[0]?.totalAmount,
     });
   } catch (error) {
     return sendServerError(error);

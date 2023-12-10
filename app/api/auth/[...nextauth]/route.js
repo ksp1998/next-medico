@@ -26,12 +26,9 @@ const handler = NextAuth({
           $or: [{ username }, { email: username }],
         });
 
-        console.log("admin", admin);
-
         if (admin) {
           const passwordCorrect = await compare(password, admin.password);
-
-          console.log(passwordCorrect);
+          s;
 
           if (passwordCorrect) {
             return {

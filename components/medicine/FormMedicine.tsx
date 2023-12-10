@@ -1,73 +1,35 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { ErrorProps, InputProps, MedicineProps } from "@/utils/props";
+import {
+  ErrorProps,
+  InputProps,
+  MedicineProps,
+  NoticeProps,
+} from "@/utils/props";
 import { boxStyle, getNotice, validate } from "@/utils/functions";
-import { Alert, Box, Button, SelectChangeEvent, Skeleton } from "@mui/material";
+import { Alert, Box, Button, SelectChangeEvent } from "@mui/material";
 import { Inventory, Medication, Vaccines } from "@mui/icons-material";
 import RenderInputs from "../RenderInputs";
 import { defaultMedicine } from "@/utils/defaults";
+import LoadingIcon from "../LoadingIcon";
 
 interface Props {
   initialMedicine?: MedicineProps;
+  initialNotice?: NoticeProps;
   medicineId?: String | undefined;
   btnLabel?: String;
 }
 
 const FormMedicine = ({
   initialMedicine = defaultMedicine,
-  medicineId,
+  initialNotice = getNotice(),
   btnLabel = "Add",
 }: Props) => {
   const [medicine, setMedicine] = useState(initialMedicine || defaultMedicine);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorProps>({});
-  const [notice, setNotice] = useState(getNotice());
-
-  const [suppliers, setSuppliers] = useState([
-    {
-      id: "",
-      label: "Loading...",
-    },
-  ]);
-
-  useEffect(() => {
-    const fetchMedicine = async () => {
-      setLoading(true);
-      try {
-        const url = `/api/medicines/${medicineId}`;
-        const response = await fetch(url);
-        const medicine = await response.json();
-        if (!medicine.error) {
-          setMedicine(medicine);
-        } else {
-          setNotice({
-            message: medicine.error,
-            severity: "error",
-          });
-        }
-      } catch (error: any | unknown) {
-        setNotice({
-          message: error.message,
-          severity: "error",
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-    medicineId && fetchMedicine();
-
-    (async () => {
-      const response = await fetch("/api/suppliers?limit=1000");
-      const jsonResponse = await response.json();
-      setSuppliers(
-        jsonResponse.suppliers.map((supplier: any) => ({
-          id: supplier._id,
-          label: supplier.name,
-        }))
-      );
-    })();
-  }, [medicineId]);
+  const [notice, setNotice] = useState(initialNotice);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
@@ -82,6 +44,7 @@ const FormMedicine = ({
   const handleSubmit = (form: FormEvent) => {
     form.preventDefault();
 
+    setLoading(true);
     setNotice(getNotice());
 
     fetch(`/api/medicines`, {
@@ -96,10 +59,11 @@ const FormMedicine = ({
           severity: response?.error ? "error" : "success",
         });
 
-        if (!medicineId && !response?.error) {
+        if (!medicine._id && !response?.error) {
           setMedicine(defaultMedicine);
         }
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const isError =
@@ -141,16 +105,7 @@ const FormMedicine = ({
   return (
     <Box sx={boxStyle()}>
       <form onSubmit={handleSubmit}>
-        {loading &&
-          Array.from(Array(3)).map((t, i) => {
-            return (
-              <Skeleton key={i} variant="rounded" height={50} sx={{ mb: 3 }} />
-            );
-          })}
-
-        {!loading && (
-          <RenderInputs inputs={inputs} handleChange={handleChange} />
-        )}
+        <RenderInputs inputs={inputs} handleChange={handleChange} />
 
         {/* <AddModal
           btnLabel="Add new Supplier"
@@ -165,6 +120,7 @@ const FormMedicine = ({
               type="submit"
               variant="contained"
               disabled={isError || loading}
+              endIcon={loading && <LoadingIcon />}
             >
               {btnLabel}
             </Button>

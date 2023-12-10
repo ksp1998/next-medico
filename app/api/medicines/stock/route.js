@@ -35,7 +35,6 @@ export async function GET(req, res) {
 
     const outOfStock = params.get("outOfStock") ?? false;
     if (outOfStock === "true") {
-      console.log(outOfStock);
       findParams.$expr = { $eq: ["$stock", "$sold"] };
     }
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { PlayArrow } from "@mui/icons-material";
 import { DashboardSectionProps } from "@/utils/props";
+import { apiFetch } from "@/utils/functions";
 
 interface Props {
   card: DashboardSectionProps;
@@ -14,9 +15,9 @@ const DashboardStatsCard = ({ card }: Props) => {
 
   useEffect(() => {
     const getCount = async () => {
-      const response = await (await fetch(`${card.api}`)).json();
-      const targetCount = response.count;
-      const duration = response.count * 200;
+      const { data: res } = await apiFetch(`${card.api}`, { count: 0 });
+      const targetCount = res.count;
+      const duration = res.count * 200;
       const startTime = performance.now();
 
       const updateCount = (currentTime: number) => {
@@ -33,8 +34,8 @@ const DashboardStatsCard = ({ card }: Props) => {
       requestAnimationFrame(updateCount);
     };
 
-    getCount();
-  }, []);
+    card?.api && getCount();
+  }, [card.api]);
 
   return (
     <div className="col-xs-12 col-sm-6 col-md-6 col-lg-4 p-2">

@@ -55,7 +55,6 @@ export async function POST(req, res) {
     const params = req.nextUrl.searchParams;
     const action = params.get("action") ?? "";
     const admin = await req.json();
-    // console.log(admin);
     const {
       _id,
       name,
@@ -101,8 +100,6 @@ export async function POST(req, res) {
       if (!response) {
         return sendResponseError("Invalid admin reference!");
       }
-
-      console.log(response);
 
       if (!(await compare(oldPassword, response.password))) {
         return sendResponseError(

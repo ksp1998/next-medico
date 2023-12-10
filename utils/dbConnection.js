@@ -32,10 +32,7 @@ const dbConnection = async () => {
   }
 
   try {
-    // console.log( connectionCache );
     connectionCache.conn = await connectionCache.promise;
-
-    // console.log( connectionCache );
   } catch (error) {
     connectionCache.promise = null;
     throw error;

@@ -1,7 +1,6 @@
 import { AlertColor } from "@mui/material";
 import { NextResponse } from "next/server";
 import { NoticeProps } from "./props";
-import { redirect } from "next/navigation";
 import { defaultPaymentStatusesOptions, defaultPaymentTypeOptions } from "./defaults";
 
 export const boxStyle = (styles = {}) => ({
@@ -195,3 +194,22 @@ export const apiGet = async (endpoint: string) => {
     return { error: error?.message };
   }
 };
+
+export const apiFetch = async (endpoint: string, defaultData: any) => {
+  let data = defaultData;
+  let notice = getNotice();
+
+  try {
+    const response = await fetch(endpoint);
+    const json = await response.json();
+    if (json.error) {
+      notice = getNotice(json.error, "error");
+    } else {
+      data = json;
+    }
+  } catch (error: any | unknown) {
+    notice = getNotice(error.message, "error");
+  }
+
+  return { data, notice }
+} 

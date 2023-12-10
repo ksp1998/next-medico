@@ -5,18 +5,24 @@ import {
   Dispatch,
   FormEvent,
   SetStateAction,
-  useEffect,
   useState,
 } from "react";
-import { ErrorProps, SupplierProps } from "@/utils/props";
+import {
+  ErrorProps,
+  InputProps,
+  NoticeProps,
+  SupplierProps,
+} from "@/utils/props";
 import { boxStyle, getNotice, getSuppliers, validate } from "@/utils/functions";
-import { Alert, Box, Button, SelectChangeEvent, Skeleton } from "@mui/material";
+import { Alert, Box, Button, SelectChangeEvent } from "@mui/material";
 import { ContactMail, Email, Person, Smartphone } from "@mui/icons-material";
 import RenderInputs from "../RenderInputs";
 import { defaultSupplier } from "@/utils/defaults";
+import LoadingIcon from "../LoadingIcon";
 
 interface Props {
   initialSupplier?: SupplierProps;
+  initialNotice?: NoticeProps;
   supplierId?: String | undefined;
   btnLabel?: String;
   formTitle?: string;
@@ -25,7 +31,7 @@ interface Props {
 
 const FormSupplier = ({
   initialSupplier = defaultSupplier,
-  supplierId,
+  initialNotice = getNotice(),
   btnLabel = "Add",
   formTitle = "",
   updateSuppliers = null,
@@ -33,34 +39,7 @@ const FormSupplier = ({
   const [supplier, setSupplier] = useState(initialSupplier || defaultSupplier);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorProps>({});
-  const [notice, setNotice] = useState(getNotice());
-
-  useEffect(() => {
-    const fetchSupplier = async () => {
-      setLoading(true);
-      try {
-        const url = `/api/suppliers/${supplierId}`;
-        const response = await fetch(url);
-        const supplier = await response.json();
-        if (!supplier.error) {
-          setSupplier(supplier);
-        } else {
-          setNotice({
-            message: supplier.error,
-            severity: "error",
-          });
-        }
-      } catch (error: any | unknown) {
-        setNotice({
-          message: error.message,
-          severity: "error",
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-    supplierId && fetchSupplier();
-  }, [supplierId]);
+  const [notice, setNotice] = useState(initialNotice);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
@@ -75,6 +54,7 @@ const FormSupplier = ({
   const handleSubmit = (form: FormEvent) => {
     form.preventDefault();
 
+    setLoading(true);
     setNotice(getNotice());
 
     fetch(`/api/suppliers`, {
@@ -89,17 +69,21 @@ const FormSupplier = ({
           severity: response?.error ? "error" : "success",
         });
 
-        if (!supplierId && !response?.error) {
+        if (!supplier._id && !response?.error) {
           setSupplier(defaultSupplier);
         }
 
         if (!response?.error && updateSuppliers !== null) {
           (async () => updateSuppliers(await getSuppliers()))();
         }
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
-  const inputs = [
+  const isError =
+    Object.entries(error).filter((err) => err[1] !== "").length > 0;
+
+  const inputs: InputProps[] = [
     {
       label: "Supplier's Name",
       name: "name",
@@ -147,28 +131,19 @@ const FormSupplier = ({
         </h3>
       )}
       <form onSubmit={handleSubmit}>
-        {loading &&
-          Array.from(Array(5)).map((t, i) => {
-            return (
-              <Skeleton
-                key={i}
-                variant="rounded"
-                height={i == 2 || i == 4 ? 150 : 50}
-                sx={{ mb: 3 }}
-              />
-            );
-          })}
-
         {/* supplier details content */}
-        {!loading && (
-          <RenderInputs inputs={inputs} handleChange={handleChange} />
-        )}
+        <RenderInputs inputs={inputs} handleChange={handleChange} />
         {/* supplier details content end */}
 
         {/* form submit button */}
         <div className="row col col-md-12">
           <div className="form-group m-auto">
-            <Button type="submit" variant="contained" disabled={loading}>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={isError || loading}
+              endIcon={loading && <LoadingIcon />}
+            >
               {btnLabel}
             </Button>
           </div>

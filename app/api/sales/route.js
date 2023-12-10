@@ -47,8 +47,6 @@ export async function GET(req, res) {
     //     return;
     //   }
 
-    //   console.log("Documents found during find:", findResult);
-
     //   // Now, use aggregate
     //   Invoice.aggregate([
     //     {
@@ -71,13 +69,9 @@ export async function GET(req, res) {
     //       return;
     //     }
 
-    //     console.log("Aggregation Result:", result);
-
     //     if (result.length > 0) {
     //       const totalAmount = result[0].totalAmount;
-    //       console.log(`Total amount for today: ${totalAmount}`);
     //     } else {
-    //       console.log("No invoices found for today.");
     //     }
     //   });
     // });

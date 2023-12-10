@@ -6,6 +6,7 @@ import FormChangePassword from "@/components/profile/FormChangePassword";
 import { siteURL } from "@/utils/defaults";
 import { getServerSession } from "next-auth";
 import { AdminProfileProps } from "@/utils/props";
+import { apiFetch } from "@/utils/functions";
 
 export const metadata: Metadata = {
   title: "Admin Profile | Medico",
@@ -13,28 +14,21 @@ export const metadata: Metadata = {
 
 const ProfilePage = async () => {
   let admin: AdminProfileProps = {
-      name: "",
-      username: "",
-      email: "",
-      number: "",
-      password: "",
-      address: "",
-    },
-    errorMessage = "";
+    name: "",
+    username: "",
+    email: "",
+    number: "",
+    password: "",
+    address: "",
+  };
   const session = await getServerSession();
 
-  try {
-    const url = `${siteURL}/api/admins?email=${session?.user?.email}`;
-    const response = await fetch(url);
-    const json = await response.json();
-    if (!json?.error) {
-      admin = json?.admins[0];
-    } else {
-      errorMessage = json?.error;
-    }
-  } catch (error: any | unknown) {
-    errorMessage = error.message;
-  }
+  const { data, notice } = await apiFetch(
+    `${siteURL}/api/admins?email=${session?.user?.email}`,
+    admin
+  );
+
+  admin = data.admins[0];
 
   return (
     <>
@@ -44,8 +38,8 @@ const ProfilePage = async () => {
         subHeading="Edit Profile"
       />
 
-      <FormAdminProfile currentAdmin={admin} errorMessage={errorMessage} />
-      <FormChangePassword currentAdmin={admin} errorMessage={errorMessage} />
+      <FormAdminProfile currentAdmin={admin} initialNotice={notice} />
+      <FormChangePassword currentAdmin={admin} initialNotice={notice} />
     </>
   );
 };

@@ -1,7 +1,12 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useState } from "react";
-import { AdminProfileProps, ErrorProps, InputProps } from "@/utils/props";
+import {
+  AdminProfileProps,
+  ErrorProps,
+  InputProps,
+  NoticeProps,
+} from "@/utils/props";
 import { boxStyle, getNotice, validate } from "@/utils/functions";
 import { Alert, Box, Button, SelectChangeEvent } from "@mui/material";
 import RenderInputs from "../RenderInputs";
@@ -10,14 +15,14 @@ import LoadingIcon from "../LoadingIcon";
 
 interface Props {
   currentAdmin: AdminProfileProps;
-  errorMessage?: string;
+  initialNotice: NoticeProps;
 }
 
-const FormChangePassword = ({ currentAdmin, errorMessage = "" }: Props) => {
+const FormChangePassword = ({ currentAdmin, initialNotice }: Props) => {
   const [admin, setAdmin] = useState(currentAdmin);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorProps>({});
-  const [notice, setNotice] = useState(getNotice(errorMessage, "error"));
+  const [notice, setNotice] = useState(initialNotice);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent

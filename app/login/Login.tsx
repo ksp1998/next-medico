@@ -36,8 +36,6 @@ const Login = () => {
       redirect: false,
     });
 
-    console.log(response);
-
     const message = response?.error
       ? "Oops! Invalid Username or Password!"
       : "You are logged in successfully!";
@@ -84,7 +82,7 @@ const Login = () => {
               alt=""
             />
             <h1>
-              <span>kMedical</span>
+              <span>Medico</span>
             </h1>
             <h2>
               <span>Admin</span> <span>Login</span>
