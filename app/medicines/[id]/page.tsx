@@ -2,6 +2,8 @@ import FormMedicine from "@/components/medicine/FormMedicine";
 import Header from "@/components/Header";
 import { Medication } from "@mui/icons-material";
 import { Metadata } from "next";
+import { defaultMedicine, siteURL } from "@/utils/defaults";
+import { apiFetch } from "@/utils/functions";
 
 interface Props {
   params: {
@@ -13,7 +15,12 @@ export const metadata: Metadata = {
   title: "Edit Medicine | Medico",
 };
 
-const EditMedicinePage = ({ params }: Props) => {
+const EditMedicinePage = async ({ params }: Props) => {
+  const { data: medicine, notice } = await apiFetch(
+    `${siteURL}/api/medicines/${params.id}`,
+    defaultMedicine
+  );
+
   return (
     <>
       <Header
@@ -22,7 +29,11 @@ const EditMedicinePage = ({ params }: Props) => {
         subHeading="Medicines"
       />
 
-      <FormMedicine medicineId={params.id} btnLabel="Update" />
+      <FormMedicine
+        initialMedicine={medicine}
+        initialNotice={notice}
+        btnLabel="Update"
+      />
     </>
   );
 };

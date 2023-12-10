@@ -2,6 +2,8 @@ import FormSupplier from "@/components/supplier/FormSupplier";
 import Header from "@/components/Header";
 import GroupsIcon from "@mui/icons-material/Groups";
 import { Metadata } from "next";
+import { defaultSupplier, siteURL } from "@/utils/defaults";
+import { apiFetch } from "@/utils/functions";
 
 export const metadata: Metadata = {
   title: "Edit Supplier | Medico",
@@ -13,7 +15,12 @@ interface Props {
   };
 }
 
-const EditSupplierPage = ({ params }: Props) => {
+const EditSupplierPage = async ({ params }: Props) => {
+  const { data: supplier, notice } = await apiFetch(
+    `${siteURL}/api/suppliers/${params.id}`,
+    defaultSupplier
+  );
+
   return (
     <>
       <Header
@@ -22,7 +29,11 @@ const EditSupplierPage = ({ params }: Props) => {
         subHeading="Suppliers"
       />
 
-      <FormSupplier supplierId={params.id} btnLabel="Update" />
+      <FormSupplier
+        initialSupplier={supplier}
+        initialNotice={notice}
+        btnLabel="Update"
+      />
     </>
   );
 };

@@ -1,8 +1,26 @@
-import { CustomerProps, InvoiceItemRowProps, MedicineProps, MedicineRowProps, SupplierProps } from "./props";
+import {
+    AdminProfileProps,
+    CustomerProps,
+    InvoiceItemRowProps,
+    MedicineProps,
+    MedicineRowProps,
+    SupplierProps,
+} from "./props";
 
-export const siteURL = process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : process.env.SITE_URL;
+export const siteURL =
+    process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : process.env.SITE_URL;
+
+export const defaultAdmin: AdminProfileProps = {
+    name: "",
+    username: "",
+    email: "",
+    number: "",
+    password: "",
+    confirmPassword: "",
+    address: "",
+};
 
 export const defaultCustomer: CustomerProps = {
     name: "",
@@ -93,6 +111,6 @@ export const defaultTableStyle = {
     borderTop: "1px solid #ff5252",
     borderBottom: "2px solid #ff5252",
     boxShadow: "none",
-}
+};
 
 export const defaultRowsPerPageLengths = [5, 8, 10, 25, 50, 100];

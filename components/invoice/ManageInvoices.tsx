@@ -3,47 +3,30 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Alert, Box, IconButton, SelectChangeEvent } from "@mui/material";
 import { ColumnProps, InvoiceProps } from "@/utils/props";
-import { apiGet, boxStyle, getCustomers, getNotice } from "@/utils/functions";
+import { boxStyle, getCustomers, getNotice } from "@/utils/functions";
 import { defaultTableParams } from "@/utils/defaults";
 import InvoiceRow from "./InvoiceRow";
 import ManageTable from "../ManageTable";
 import FormInput from "../FormInput";
 import { DateRange, Numbers, People, Sync } from "@mui/icons-material";
 import AutoCompleteInput from "../AutoCompleteInput";
+import { useFetchData } from "@/utils/hooks";
 
 const ManageInvoices = () => {
-  const [invoices, setInvoices] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0);
-  const [notice, setNotice] = useState(getNotice());
   const [params, setParams] = useState(defaultTableParams);
+
+  const {
+    data: invoices,
+    count,
+    loading,
+    error: notice,
+  } = useFetchData("/api/invoices", params);
 
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
     (async () => setCustomers(await getCustomers()))();
   }, []);
-
-  useEffect(() => {
-    const loadInvoices = async () => {
-      setLoading(true);
-      setNotice(getNotice());
-      const response = await apiGet(
-        `/api/invoices?${new URLSearchParams(params)}`
-      );
-      if (response.invoices) {
-        setInvoices(response.invoices ?? []);
-        setCount(response?.count);
-      } else {
-        setNotice({
-          message: response.error,
-          severity: "error",
-        });
-      }
-      setLoading(false);
-    };
-    loadInvoices();
-  }, [params]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent

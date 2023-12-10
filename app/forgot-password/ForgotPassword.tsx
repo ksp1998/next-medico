@@ -90,7 +90,7 @@ const ForgotPassword = () => {
               alt=""
             />
             <h1>
-              <span>kMedical</span>
+              <span>Medico</span>
             </h1>
             <h2>
               <span>Forgot</span> <span>Password</span>

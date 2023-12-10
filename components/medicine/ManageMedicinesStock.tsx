@@ -3,55 +3,33 @@
 import { useEffect, useState } from "react";
 import { Alert, Box, Button, IconButton } from "@mui/material";
 import { ColumnProps, MedicineStockProps } from "@/utils/props";
-import {
-  apiGet,
-  boxStyle,
-  getMedicines,
-  getNotice,
-  getSuppliers,
-} from "@/utils/functions";
+import { boxStyle, getMedicines, getSuppliers } from "@/utils/functions";
 import MedicineStockRow from "./MedicineStockRow";
 import ManageTable from "../ManageTable";
 import { defaultTableParams } from "@/utils/defaults";
 import { Groups, Medication, Sync } from "@mui/icons-material";
 import AutoCompleteInput from "../AutoCompleteInput";
+import { useFetchData } from "@/utils/hooks";
 
 const ManageMedicinesStock = () => {
-  const [medicinesStock, setMedicinesStock] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0);
-  const [notice, setNotice] = useState(getNotice());
   const [params, setParams] = useState(defaultTableParams);
+
+  const {
+    data: medicinesStock,
+    count,
+    loading,
+    error,
+  } = useFetchData("/api/medicines/stock", params, "medicinesStock");
+
+  const [notice, setNotice] = useState(error);
 
   const [suppliers, setSuppliers] = useState([]);
   const [medicines, setMedicines] = useState([]);
-
-  const loadMedicinesStock = async () => {
-    setLoading(true);
-    const response = await apiGet(
-      `/api/medicines/stock?${new URLSearchParams(params)}`
-    );
-    if (response.medicinesStock) {
-      setMedicinesStock(response.medicinesStock ?? []);
-      setCount(response?.count);
-    } else {
-      setNotice({
-        message: response.error,
-        severity: "error",
-      });
-    }
-    setLoading(false);
-  };
 
   useEffect(() => {
     (async () => setSuppliers(await getSuppliers()))();
     (async () => setMedicines(await getMedicines()))();
   }, []);
-
-  useEffect(() => {
-    setNotice(getNotice());
-    loadMedicinesStock();
-  }, [params]);
 
   const columns: ColumnProps[] = [
     { id: "name", label: "Name" },

@@ -84,7 +84,7 @@ const Login = () => {
               alt=""
             />
             <h1>
-              <span>kMedical</span>
+              <span>Medico</span>
             </h1>
             <h2>
               <span>Admin</span> <span>Login</span>

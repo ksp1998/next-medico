@@ -1,41 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert, Box } from "@mui/material";
 import { ColumnProps, CustomerProps } from "@/utils/props";
 import CustomerRow from "./CustomerRow";
-import { apiGet, boxStyle, getNotice } from "@/utils/functions";
+import { boxStyle } from "@/utils/functions";
 import { Search } from "@mui/icons-material";
 import { defaultTableParams } from "@/utils/defaults";
 import ManageTable from "../ManageTable";
 import FormInput from "../FormInput";
+import { useFetchData } from "@/utils/hooks";
 
 const ManageCustomers = () => {
-  const [customers, setCustomers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0);
-  const [notice, setNotice] = useState(getNotice());
   const [params, setParams] = useState(defaultTableParams);
 
-  const loadCustomers = async () => {
-    setLoading(true);
-    const searchParams = new URLSearchParams(params);
-    const response = await apiGet(`/api/customers?${searchParams}`);
-    if (response.customers) {
-      setCustomers(response.customers ?? []);
-      setCount(response?.count);
-    } else {
-      setNotice({
-        message: response.error,
-        severity: "error",
-      });
-    }
-    setLoading(false);
-  };
+  const {
+    data: customers,
+    count,
+    loading,
+    error,
+  } = useFetchData("/api/customers", params);
 
-  useEffect(() => {
-    loadCustomers();
-  }, [params]);
+  const [notice, setNotice] = useState(error);
 
   const deleteCustomer = async (id: string) => {
     const response = await fetch(`/api/customers/${id}`, {
@@ -54,7 +40,8 @@ const ManageCustomers = () => {
       message: jsonResponse.message,
       severity: "success",
     });
-    loadCustomers();
+
+    setParams((prev) => ({ ...prev }));
   };
 
   const columns: ColumnProps[] = [

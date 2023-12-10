@@ -19,19 +19,10 @@ import {
   Lock,
   Smartphone,
 } from "@mui/icons-material";
-import { AdminProfileProps, ErrorProps } from "@/utils/props";
+import { ErrorProps } from "@/utils/props";
 import LoadingIcon from "@/components/LoadingIcon";
 import { useRouter } from "next/navigation";
-
-const defaultAdmin: AdminProfileProps = {
-  name: "",
-  username: "",
-  email: "",
-  number: "",
-  password: "",
-  confirmPassword: "",
-  address: "",
-};
+import { defaultAdmin } from "@/utils/defaults";
 
 const Setup = () => {
   const [admin, setAdmin] = useState(defaultAdmin);

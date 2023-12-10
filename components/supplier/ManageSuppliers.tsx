@@ -1,42 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert, Box } from "@mui/material";
-import { apiGet, boxStyle, getNotice } from "@/utils/functions";
+import { boxStyle } from "@/utils/functions";
 import { defaultTableParams } from "@/utils/defaults";
 import { ColumnProps, SupplierProps } from "@/utils/props";
 import SupplierRow from "./SupplierRow";
 import { Search } from "@mui/icons-material";
 import ManageTable from "../ManageTable";
 import FormInput from "../FormInput";
+import { useFetchData } from "@/utils/hooks";
 
 const ManageSuppliers = () => {
-  const [suppliers, setSuppliers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0);
-  const [notice, setNotice] = useState(getNotice());
   const [params, setParams] = useState(defaultTableParams);
 
-  const loadSuppliers = async () => {
-    setLoading(true);
-    const searchParams = new URLSearchParams(params);
-    const response = await apiGet(`/api/suppliers?${searchParams}`);
-    if (response.suppliers) {
-      setSuppliers(response.suppliers ?? []);
-      setCount(response?.count);
-      setNotice(getNotice());
-    } else {
-      setNotice({
-        message: response.message,
-        severity: "error",
-      });
-    }
-    setLoading(false);
-  };
+  const {
+    data: suppliers,
+    count,
+    loading,
+    error,
+  } = useFetchData("/api/suppliers", params);
 
-  useEffect(() => {
-    loadSuppliers();
-  }, [params]);
+  const [notice, setNotice] = useState(error);
 
   const deleteSupplier = async (id: string) => {
     const response = await fetch(`/api/suppliers/${id}`, {
@@ -55,7 +40,8 @@ const ManageSuppliers = () => {
       message: jsonResponse.message,
       severity: "success",
     });
-    loadSuppliers();
+
+    setParams((prev) => ({ ...prev }));
   };
 
   const columns: ColumnProps[] = [

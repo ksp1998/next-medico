@@ -1,22 +1,28 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { DateRange, Sync } from "@mui/icons-material";
 import { Alert, Box, IconButton, SelectChangeEvent } from "@mui/material";
 import { defaultTableParams } from "@/utils/defaults";
 import { ColumnProps, PurchaseProps } from "@/utils/props";
-import { apiGet, boxStyle, getNotice } from "@/utils/functions";
+import { boxStyle } from "@/utils/functions";
 import FormInput from "../FormInput";
 import ManageTable from "../ManageTable";
 import PurchaseReportRow from "./PurchaseReportRow";
+import { useFetchData } from "@/utils/hooks";
 
 const PurchaseReport = () => {
-  const [purchases, setPurchases] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0);
-  const [notice, setNotice] = useState(getNotice());
   const [params, setParams] = useState(defaultTableParams);
-  const [totalPurchase, setTotalPurchase] = useState(0);
+
+  const {
+    data: purchases,
+    count,
+    loading,
+    error: notice,
+    response,
+  } = useFetchData("/api/purchases", params);
+
+  const totalPurchase = response?.purchaseTotal ?? 0;
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
@@ -24,25 +30,6 @@ const PurchaseReport = () => {
     const { name, value } = e.target;
     setParams((prev) => ({ ...prev, [name]: value }));
   };
-
-  const loadPurchases = async () => {
-    setLoading(true);
-    setNotice(getNotice());
-    const searchParams = new URLSearchParams(params);
-    const response = await apiGet(`/api/purchases?${searchParams}`);
-    if (response.purchases) {
-      setPurchases(response?.purchases ?? []);
-      setCount(response?.count);
-      setTotalPurchase(response?.salesTotal ?? 0);
-    } else {
-      setNotice({ message: response.error, severity: "error" });
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    loadPurchases();
-  }, [params]);
 
   const columns: ColumnProps[] = [
     { id: "#", label: "#" },

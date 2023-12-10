@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useEffect, useState } from "react";
 import { Alert, Box, IconButton, SelectChangeEvent } from "@mui/material";
-import { apiGet, boxStyle, getNotice, getSuppliers } from "@/utils/functions";
+import { boxStyle, getSuppliers } from "@/utils/functions";
 import {
   defaultPaymentStatusesOptions,
   defaultTableParams,
@@ -13,36 +13,19 @@ import ManageTable from "../ManageTable";
 import AutoCompleteInput from "../AutoCompleteInput";
 import { DateRange, Groups, Sync } from "@mui/icons-material";
 import FormInput from "../FormInput";
+import { useFetchData } from "@/utils/hooks";
 
 const ManagePurchases = () => {
-  const [purchases, setPurchases] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(0);
-  const [suppliers, setSuppliers] = useState([]);
-  const [notice, setNotice] = useState(getNotice());
   const [params, setParams] = useState(defaultTableParams);
 
-  const loadPurchases = async () => {
-    setLoading(true);
-    const response = await apiGet(
-      `/api/purchases?${new URLSearchParams(params)}`
-    );
-    if (response.purchases) {
-      setPurchases(response.purchases ?? []);
-      setCount(response?.count);
-      setNotice(getNotice());
-    } else {
-      setNotice({
-        message: response.message,
-        severity: "error",
-      });
-    }
-    setLoading(false);
-  };
+  const {
+    data: purchases,
+    count,
+    loading,
+    error: notice,
+  } = useFetchData("/api/purchases", params);
 
-  useEffect(() => {
-    loadPurchases();
-  }, [params]);
+  const [suppliers, setSuppliers] = useState([]);
 
   useEffect(() => {
     (async () => setSuppliers(await getSuppliers()))();

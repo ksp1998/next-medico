@@ -1,5 +1,8 @@
 import FormCustomer from "@/components/customer/FormCustomer";
 import Header from "@/components/Header";
+import { defaultCustomer, siteURL } from "@/utils/defaults";
+import { apiFetch } from "@/utils/functions";
+import { CustomerProps } from "@/utils/props";
 import { People } from "@mui/icons-material";
 import { Metadata } from "next";
 
@@ -13,7 +16,12 @@ interface Props {
   };
 }
 
-const EditCustomerPage = ({ params }: Props) => {
+const EditCustomerPage = async ({ params }: Props) => {
+  const { data: customer, notice } = await apiFetch(
+    `${siteURL}/api/customers/${params.id}`,
+    defaultCustomer
+  );
+
   return (
     <>
       <Header
@@ -22,7 +30,11 @@ const EditCustomerPage = ({ params }: Props) => {
         subHeading="Customers"
       />
 
-      <FormCustomer customerId={params.id} btnLabel="Update" />
+      <FormCustomer
+        initialCustomer={customer}
+        initialNotice={notice}
+        btnLabel="Update"
+      />
     </>
   );
 };
