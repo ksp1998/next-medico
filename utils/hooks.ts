@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NoticeProps } from "./props";
+import { ThemeContext } from "./contexts";
+
+export const useTheme = () => useContext(ThemeContext);
 
 export const useOnlineStatus = () => {
     const [isOnline, setIsOnline] = useState(true);

@@ -1,6 +1,9 @@
 "use client";
 
+import { useTheme } from "@/utils/hooks";
 import {
+  DarkMode,
+  LightMode,
   Logout,
   ManageAccounts,
   Password,
@@ -18,6 +21,7 @@ interface Props {
 
 const Header = ({ icon, heading, subHeading }: Props) => {
   const [open, setOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   return (
     <>
       <header
@@ -39,6 +43,13 @@ const Header = ({ icon, heading, subHeading }: Props) => {
             onClick={() => setOpen(!open)}
           >
             <Settings sx={{ fontSize: 32 }} />
+          </button>
+          <button className="col col-md-1 nav-item m-3" onClick={toggleTheme}>
+            {theme === "dark" ? (
+              <LightMode sx={{ fontSize: 32, color: "yellow" }} />
+            ) : (
+              <DarkMode sx={{ fontSize: 32, color: "darkblue" }} />
+            )}
           </button>
           {open && (
             <ul className="nav-items list-unstyled">

@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "@/styles/globals.scss";
 import { ReactNode } from "react";
 import { getServerSession } from "next-auth";
+import App from "@/components/App";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -20,14 +21,9 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="en">
       <body>
-        {session && <SideNav />}
-        <main
-          className={`${nunito.className} ${
-            session ? "container-fluid logged-in" : "logged-out"
-          }`}
-        >
+        <App session={session} fontClass={nunito.className}>
           {children}
-        </main>
+        </App>
       </body>
     </html>
   );
