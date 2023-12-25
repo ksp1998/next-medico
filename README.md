@@ -2,7 +2,7 @@
 
 **Next Medico** is a web application designed to streamline the administrative processes of a medical store. The project is built using **Next.js**, **React's**, **TypeScript**, and **MongoDB**. It encompasses features such as customer management, supplier management, sales and purchase tracking, medicine stock management, as well as invoice generation and management.
 
-### Live URL: https://next-medico.vercel.app
+### Demo URL: https://next-medico.vercel.app
 
 ## Demo User Account
 I have created a demo user account to facilitate exploration of the system. The demo user account has specific limitations and capabilities:
@@ -10,6 +10,11 @@ I have created a demo user account to facilitate exploration of the system. The 
 * Create, Update, and Delete Actions: Disabled
 * Data Retrieval: The demo user can request data from the database.
 * Profile Update and Password Change: Not allowed for demo users.
+
+```
+username: demo
+password: Demo@123
+```
 
 ## Installation Guide
 
