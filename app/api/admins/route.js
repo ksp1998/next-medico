@@ -2,6 +2,7 @@ import Admin from "@/models/admin";
 import dbConnection from "@/utils/dbConnection";
 import { hash, compare } from "bcrypt";
 import {
+  authenticateUser,
   sendResponseError,
   sendResponseSuccess,
   sendServerError,
@@ -107,6 +108,9 @@ export async function POST(req, res) {
         );
       }
     }
+
+    const authRes = await authenticateUser();
+    if (authRes) return sendResponseError(authRes);
 
     if (action !== "profile") {
       admin.password = await hash(password, 10);

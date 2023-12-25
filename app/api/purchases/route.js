@@ -5,6 +5,7 @@ import Supplier from "@/models/supplier";
 import dbConnection from "@/utils/dbConnection";
 import { defaultPaymentStatusesOptions } from "@/utils/defaults";
 import {
+  authenticateUser,
   sendResponseError,
   sendResponseSuccess,
   sendServerError,
@@ -150,6 +151,9 @@ export async function POST(req) {
         `Purchase with invoice number '${purchaseDetails.invoiceNumber}' already exist!`
       );
     }
+
+    const authRes = await authenticateUser();
+    if (authRes) return sendResponseError(authRes);
 
     const newPurchase = await Purchase.create(purchaseDetails);
 

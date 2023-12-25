@@ -2,6 +2,7 @@ import { AlertColor } from "@mui/material";
 import { NextResponse } from "next/server";
 import { NoticeProps } from "./props";
 import { defaultPaymentStatusesOptions, defaultPaymentTypeOptions } from "./defaults";
+import { getServerSession } from "next-auth";
 
 export const boxStyle = (styles = {}) => ({
   ...styles,
@@ -212,4 +213,14 @@ export const apiFetch = async (endpoint: string, defaultData: any) => {
   }
 
   return { data, notice }
-} 
+}
+
+export const authenticateUser = async () => {
+  const session = await getServerSession();
+
+  if (!session?.user?.email) {
+    return "Oops! Unauthorized user request! Please try to login again!";
+  }
+
+  return session?.user?.email === "demouser@test.com" ? "Oops! Demo user is not allowed to perform this action!" : false;
+}

@@ -1,6 +1,10 @@
 import Medicine from "@/models/medicine";
 import dbConnection from "@/utils/dbConnection";
-import { sendResponseError, sendResponseSuccess } from "@/utils/functions";
+import {
+  authenticateUser,
+  sendResponseError,
+  sendResponseSuccess,
+} from "@/utils/functions";
 import { NextResponse } from "next/server";
 
 export async function GET(req, res) {
@@ -31,6 +35,9 @@ export async function DELETE(req, res) {
         error: "Medicine does not exists!",
       });
     }
+
+    const authRes = await authenticateUser();
+    if (authRes) return sendResponseError(authRes);
 
     const result = await Medicine.deleteOne(params);
     if (result) {

@@ -6,6 +6,7 @@ import Stock from "@/models/stock";
 import dbConnection from "@/utils/dbConnection";
 import { defaultPaymentTypeOptions } from "@/utils/defaults";
 import {
+  authenticateUser,
   sendResponseError,
   sendResponseSuccess,
   sendServerError,
@@ -178,6 +179,9 @@ export async function POST(req) {
         `Invoice with invoice number '${invoiceDetails.invoiceNumber}' already exist!`
       );
     }
+
+    const authRes = await authenticateUser();
+    if (authRes) return sendResponseError(authRes);
 
     const newInvoice = await Invoice.create({
       ...invoiceDetails,

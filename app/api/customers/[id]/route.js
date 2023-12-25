@@ -1,6 +1,7 @@
 import Customer from "@/models/customer";
 import dbConnection from "@/utils/dbConnection";
 import {
+  authenticateUser,
   sendResponseError,
   sendResponseSuccess,
   sendServerError,
@@ -35,6 +36,9 @@ export async function DELETE(req, res) {
         error: "Customer does not exists!",
       });
     }
+
+    const authRes = await authenticateUser();
+    if (authRes) return sendResponseError(authRes);
 
     const result = await Customer.deleteOne(params);
     if (result) {

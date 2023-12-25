@@ -28,7 +28,6 @@ const handler = NextAuth({
 
         if (admin) {
           const passwordCorrect = await compare(password, admin.password);
-          s;
 
           if (passwordCorrect) {
             return {

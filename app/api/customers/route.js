@@ -1,6 +1,7 @@
 import Customer from "@/models/customer";
 import dbConnection from "@/utils/dbConnection";
 import {
+  authenticateUser,
   sendResponseError,
   sendResponseSuccess,
   sendServerError,
@@ -48,6 +49,7 @@ export async function GET(req, res) {
 export async function POST(req) {
   try {
     await dbConnection();
+
     const customer = await req.json();
 
     if (!customer?.name?.trim()) {
@@ -65,6 +67,9 @@ export async function POST(req) {
     if (!customer?.doctorAddress?.trim()) {
       return sendResponseError("Doctor Address Empty!!");
     }
+
+    const authRes = await authenticateUser();
+    if (authRes) return sendResponseError(authRes);
 
     let message, response;
     if (!customer._id) {

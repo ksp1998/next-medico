@@ -1,6 +1,7 @@
 import Medicine from "@/models/medicine";
 import dbConnection from "@/utils/dbConnection";
 import {
+  authenticateUser,
   sendResponseError,
   sendResponseSuccess,
   sendServerError,
@@ -62,6 +63,9 @@ export async function POST(req) {
       delete medicine.supplier;
       // return sendResponseError("Supplier name is empty!");
     }
+
+    const authRes = await authenticateUser();
+    if (authRes) return sendResponseError(authRes);
 
     medicine.packing = medicine?.packing?.trim().replace(" ", "").toUpperCase();
 

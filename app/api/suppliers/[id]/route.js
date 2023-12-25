@@ -1,6 +1,10 @@
 import Supplier from "@/models/supplier";
 import dbConnection from "@/utils/dbConnection";
-import { sendResponseError, sendResponseSuccess } from "@/utils/functions";
+import {
+  authenticateUser,
+  sendResponseError,
+  sendResponseSuccess,
+} from "@/utils/functions";
 import { NextResponse } from "next/server";
 
 export async function GET(req, res) {
@@ -31,6 +35,9 @@ export async function DELETE(req, res) {
         error: "Supplier does not exists!",
       });
     }
+
+    const authRes = await authenticateUser();
+    if (authRes) return sendResponseError(authRes);
 
     const result = await Supplier.deleteOne(params);
     if (result) {

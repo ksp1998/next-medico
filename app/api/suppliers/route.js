@@ -1,6 +1,7 @@
 import Supplier from "@/models/supplier";
 import dbConnection from "@/utils/dbConnection";
 import {
+  authenticateUser,
   sendResponseError,
   sendResponseSuccess,
   sendServerError,
@@ -61,6 +62,9 @@ export async function POST(req) {
     if (!supplier?.address?.trim()) {
       return sendResponseError("Address Empty!");
     }
+
+    const authRes = await authenticateUser();
+    if (authRes) return sendResponseError(authRes);
 
     let message, response;
     if (!supplier._id) {
