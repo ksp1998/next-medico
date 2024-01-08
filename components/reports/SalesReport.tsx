@@ -58,7 +58,7 @@ const SalesReport = () => {
         }}
       >
         <div className="row col col-md-12">
-          <div className="col col-md-3 form-group">
+          <div className="col col-10 col-md-5 col-xl-3 form-group">
             {" "}
             <FormInput
               label="Start Date"
@@ -69,7 +69,7 @@ const SalesReport = () => {
               startIcon={<DateRange />}
             />
           </div>
-          <div className="col col-md-3 form-group">
+          <div className="col col-10 col-md-5 col-xl-3 form-group">
             <FormInput
               label="End Date"
               type="date"
@@ -80,7 +80,7 @@ const SalesReport = () => {
             />
           </div>
 
-          <div className="col col-md-1 form-group">
+          <div className="col col-2 form-group">
             <IconButton
               size="large"
               color="success"

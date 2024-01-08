@@ -123,8 +123,8 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
       <form onSubmit={handleSubmit}>
         <div className="row">
           {/* <!-- customer details content --> */}
-          <div className="row col col-md-12">
-            <div className="col col-md-3 form-group">
+          <div className="col col-12 row">
+            <div className="col col-12 col-md-6 col-lg-4 col-xl-3 form-group">
               <AutoCompleteInput
                 label="Customer"
                 noOptionsText="No customers"
@@ -135,7 +135,7 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
                 startIcon={<People />}
               />
             </div>
-            <div className="col col-md-3 form-group">
+            <div className="col col-12 col-md-6 col-lg-4 col-xl-3 form-group">
               <FormInput
                 label="Address"
                 disabled={true}
@@ -143,7 +143,7 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
                 startIcon={<ContactMail />}
               />
             </div>
-            <div className="col col-md-2 form-group">
+            <div className="col col-6 col-md-4 col-lg-3 col-xl-2 form-group">
               <FormInput
                 label="Invoice Number"
                 name="invoiceNumber"
@@ -153,7 +153,7 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
                 startIcon={<Numbers />}
               />
             </div>
-            <div className="col col-md-2 form-group">
+            <div className="col col-6 col-md-4 col-lg-4 col-xl-2 form-group">
               <FormInput
                 label="Payment Type"
                 type="select"
@@ -165,7 +165,7 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
                 startIcon={<Payment />}
               />
             </div>
-            <div className="col col-md-2 form-group">
+            <div className="col col-12 col-md-4 col-lg-4 col-xl-2 form-group">
               <FormInput
                 label="Invoice Date"
                 type="date"
@@ -180,8 +180,8 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
           {/* <!-- customer details content end --> */}
 
           {/* <!-- new user button --> */}
-          <div className="row col col-md-12">
-            <div className="col col-md-2 form-group">
+          <div className="col col-12 row">
+            <div className="col-8 col-md-4 form-group mb-4">
               <AddModal
                 btnLabel="New Customer"
                 btnVariant="contained"
@@ -193,8 +193,8 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
                 }
               />
             </div>
-            <div className="col col-md-1 form-group"></div>
-            <div className="col col-md-2 form-group">
+            <div className="col form-group"></div>
+            <div className="col col-12 col-md-6 col-lg-4 form-group">
               <FormInput
                 label="Contact Number"
                 type="number"
@@ -227,9 +227,9 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
 
           <hr style={{ paddingBottom: "1em" }} />
 
-          <div className="row col col-md-12">
-            <div className="col col-md-6 form-group"></div>
-            <div className="col col-md-2 form-group float-right">
+          <div className="row col col-12">
+            <div className="col col-12 col-lg-3 form-group"></div>
+            <div className="col col-6 col-md-4 col-lg-3 form-group">
               <FormInput
                 label="Total Amount"
                 type="number"
@@ -244,7 +244,7 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
                 error={invoiceError?.totalAmount}
               />
             </div>
-            <div className="col col-md-2 form-group float-right">
+            <div className="col col-6 col-md-4 col-lg-3 form-group">
               <FormInput
                 label="Total Discount"
                 type="number"
@@ -262,7 +262,7 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
                 error={invoiceError?.totalDiscount}
               />
             </div>
-            <div className="col col-md-2 form-group float-right">
+            <div className="col col-12 col-md-4 col-lg-3 form-group">
               <FormInput
                 label="Net Total"
                 type="number"
@@ -284,8 +284,8 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
 
           <hr style={{ paddingTop: "1em" }} />
 
-          <div className="row col col-md-12">
-            <div className="col col-md-8 form-group float-right">
+          <div className="row col col-12">
+            <div className="col col-12 col-md-4 col-lg-3 form-group mb-4">
               <div className="d-flex gap-3">
                 {!saved && (
                   <Button
@@ -325,7 +325,9 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
               </div>
             </div>
 
-            <div className="col col-md-2 form-group float-right">
+            <div className="col col-12 col-lg-3 form-group"></div>
+
+            <div className="col col-6 col-md-4 col-lg-3 form-group">
               <FormInput
                 label="Paid Amount"
                 type="number"
@@ -335,7 +337,7 @@ const FormInvoice = ({ btnLabel = "Save Invoice" }: Props) => {
                 error={invoiceError?.paidAmount}
               />
             </div>
-            <div className="col col-md-2 form-group float-right">
+            <div className="col col-6 col-md-4 col-lg-3 form-group">
               <FormInput
                 label="Change"
                 type="number"

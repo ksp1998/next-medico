@@ -144,17 +144,16 @@ const FormCustomer = ({
         {/* customer details content end */}
 
         {/* form submit button */}
-        <div className="row col col-md-12">
-          <div className="form-group m-auto">
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={isError || loading}
-              endIcon={loading && <LoadingIcon />}
-            >
-              {btnLabel}
-            </Button>
-          </div>
+
+        <div className="form-group m-auto">
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={isError || loading}
+            endIcon={loading && <LoadingIcon />}
+          >
+            {btnLabel}
+          </Button>
         </div>
 
         {/* result message */}

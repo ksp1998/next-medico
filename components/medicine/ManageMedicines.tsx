@@ -61,7 +61,7 @@ const ManageMedicines = () => {
       )}
 
       <Box sx={{ mb: 3, display: "flex", justifyContent: "end" }}>
-        <div className="col col-md-3 form-group">
+        <div className="col col-12 col-md-6 col-lg-4 col-xl-3 form-group">
           <FormInput
             label="Search"
             type="search"

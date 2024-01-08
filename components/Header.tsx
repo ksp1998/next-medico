@@ -28,7 +28,7 @@ const Header = ({ icon, heading, subHeading }: Props) => {
         className="row content-header bg-white m-0 align-items-center"
         style={{ padding: "1em", borderBottom: "2px solid red" }}
       >
-        <div className="col-md-11">
+        <div className="col-10">
           <div className="d-flex align-items-center gap-2">
             {icon}
             <div className="d-flex flex-column">
@@ -37,7 +37,7 @@ const Header = ({ icon, heading, subHeading }: Props) => {
             </div>
           </div>
         </div>
-        <nav className="col-md-1 header-nav">
+        <nav className="col-2 header-nav d-flex justify-content-end">
           <button
             className="col col-md-1 nav-item m-3"
             onClick={() => setOpen(!open)}

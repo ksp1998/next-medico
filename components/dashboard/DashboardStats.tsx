@@ -66,14 +66,14 @@ const DashboardStats = () => {
 
   return (
     <Box sx={boxStyle()}>
-      <div className="row rounded gap-2 p-2">
-        <div className="row col col-xs-8 col-sm-8 col-md-8 col-lg-8">
+      <div className="row rounded justify-content-center">
+        <div className="row col col-12 col-xl-8 g-0">
           {cards.map((card: DashboardSectionProps, i) => (
             <DashboardStatsCard key={i} card={card} />
           ))}
         </div>
 
-        <div className="col col-xs-4 col-sm-4 col-md-4 col-lg-4 flex-grow-1">
+        <div className="col col-12 col-xl-4 px-2">
           <TableContainer
             className="mt-2 rounded overflow-hidden todays-report text-bold"
             sx={{ td: { fontWeight: "bold", fontSize: 18 } }}

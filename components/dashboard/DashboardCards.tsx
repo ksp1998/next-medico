@@ -54,20 +54,22 @@ const DashboardCards = () => {
   ];
 
   return (
-    <Box sx={boxStyle({ display: "flex", flexWrap: "wrap" })}>
-      {cards.map((card: DashboardSectionProps, i) => (
-        <div key={i} className="col-xs-12 col-sm-6 col-md-3 col-lg-3 p-2">
-          <Link
-            className="d-block text-decoration-none p-3 pt-4 pb-4 rounded dashboard-stats"
-            href={card.href ?? "#"}
-          >
-            <div className="text-center text-dark">
-              <span className="d-block mb-3">{card.icon}</span>
-              <div className="h5">{card.title}</div>
-            </div>
-          </Link>
-        </div>
-      ))}
+    <Box sx={boxStyle({ display: "flex" })}>
+      <div className="row">
+        {cards.map((card: DashboardSectionProps, i) => (
+          <div key={i} className="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
+            <Link
+              className="d-block text-decoration-none p-3 pt-4 pb-4 rounded dashboard-stats"
+              href={card.href ?? "#"}
+            >
+              <div className="text-center text-dark">
+                <span className="d-block mb-3">{card.icon}</span>
+                <div className="h5">{card.title}</div>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
     </Box>
   );
 };

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ReactNode, useState } from "react";
+import { ReactNode, RefObject, useRef, useState } from "react";
 import { Url } from "next/dist/shared/lib/router/router";
 import {
   Analytics,
@@ -17,6 +17,8 @@ import {
 } from "@mui/icons-material";
 
 const SideNav = () => {
+  const sideNav = useRef<HTMLElement>(null);
+
   interface MenuItem {
     key?: null;
     text: String;
@@ -142,28 +144,41 @@ const SideNav = () => {
   };
 
   return (
-    <nav className="side-nav">
-      <div className="nav-content">
-        <div className="nav-body">
-          <div className="logo pt-5 pb-4">
-            <Image
-              className="profile"
-              src="/images/prof.jpg"
-              width={100}
-              height={100}
-              alt="Profile"
-            />
-            <h1 className="logo-caption">Admin</h1>
+    <>
+      <nav className="side-nav" ref={sideNav}>
+        <div className="nav-content">
+          <div className="nav-body">
+            <div className="logo pt-5 pb-4">
+              <Image
+                className="profile"
+                src="/images/prof.jpg"
+                width={100}
+                height={100}
+                alt="Profile"
+              />
+              <h1 className="logo-caption">Admin</h1>
+            </div>
+            {/* logo class */}
+            <ul className="nav-items">
+              {menuItems.map((item: MenuItem) => RenderMenuItem(item))}
+            </ul>
           </div>
-          {/* logo class */}
-          <ul className="nav-items">
-            {menuItems.map((item: MenuItem) => RenderMenuItem(item))}
-          </ul>
+          {/* card-body class */}
         </div>
-        {/* card-body class */}
-      </div>
-      {/* card  */}
-    </nav>
+        {/* card  */}
+      </nav>
+      <button
+        id="side-nav-toggler"
+        className="d-flex"
+        onClick={(e) => {
+          sideNav.current?.classList.toggle("open");
+        }}
+      >
+        <span className="bar"></span>
+        <span className="bar"></span>
+        <span className="bar"></span>
+      </button>
+    </>
   );
 };
 

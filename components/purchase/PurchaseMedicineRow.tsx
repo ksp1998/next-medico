@@ -87,8 +87,8 @@ const PurchaseMedicineRow = ({
 
   return (
     <>
-      <div className="row col col-md-12">
-        <div className="col col-md-2">
+      <div className="row col col-12">
+        <div className="col col-12 col-sm-8 col-lg-4 col-xl-2">
           <AutoCompleteInput
             freeSolo={true}
             label="Medicine"
@@ -106,7 +106,7 @@ const PurchaseMedicineRow = ({
             error={medicineError?.name}
           />
         </div>
-        <div className="col col-md-1">
+        <div className="col col-4 col-sm-4 col-lg-2 col-xl-1">
           <FormInput
             label="Packing"
             name="packing"
@@ -116,7 +116,7 @@ const PurchaseMedicineRow = ({
             error={medicineError?.packing}
           />
         </div>
-        <div className="col col-md-2">
+        <div className="col col-4 col-sm-3 col-lg-2">
           <FormInput
             label="Batch ID"
             name="batchId"
@@ -126,7 +126,7 @@ const PurchaseMedicineRow = ({
             error={medicineError?.batchId}
           />
         </div>
-        <div className="col col-md-1">
+        <div className="col col-4 col-sm-3 col-lg-2 col-xl-1">
           <FormInput
             label="Expiry"
             name="expiry"
@@ -136,7 +136,7 @@ const PurchaseMedicineRow = ({
             error={medicineError?.expiry}
           />
         </div>
-        <div className="col col-md-1">
+        <div className="col col-4 col-sm-2 col-xl-1">
           <FormInput
             label="Quantity"
             name="quantity"
@@ -146,7 +146,7 @@ const PurchaseMedicineRow = ({
             error={medicineError?.quantity}
           />
         </div>
-        <div className="col col-md-1">
+        <div className="col col-4 col-sm-2 col-xl-1">
           <FormInput
             label="MRP"
             name="mrp"
@@ -156,7 +156,7 @@ const PurchaseMedicineRow = ({
             error={medicineError?.mrp}
           />
         </div>
-        <div className="col col-md-1">
+        <div className="col col-4 col-sm-2 col-xl-1">
           <FormInput
             label="Rate"
             name="rate"
@@ -166,8 +166,8 @@ const PurchaseMedicineRow = ({
             error={medicineError?.rate}
           />
         </div>
-        <div className="row col col-md-3">
-          <div className="col col-md-7">
+        <div className="row col col-12 col-lg-8 col-xl-3">
+          <div className="col col-6">
             <FormInput
               label="Amount"
               value={(
@@ -177,7 +177,7 @@ const PurchaseMedicineRow = ({
               disabled={true}
             />
           </div>
-          <div className="col col-md-5 d-flex gap-2">
+          <div className="col col-6 d-flex gap-2 justify-content-end">
             <Button
               variant="contained"
               sx={{ height: "67.5%" }}
@@ -199,8 +199,8 @@ const PurchaseMedicineRow = ({
       </div>
       <br />
       {!medicine?.id && medicine?.name && (
-        <div className="row col col-md-8">
-          <div className="col col-md-8">
+        <div className="row col col-12">
+          <div className="col col-12 col-md-8">
             <FormInput
               label="New Medicine, Generic Name?"
               name="genericName"

@@ -68,7 +68,7 @@ const ManagePurchases = () => {
         }}
       >
         <div className="row col col-md-12">
-          <div className="col col-md-3 form-group">
+          <div className="col col-12 col-md-6 col-xl-3 form-group">
             <AutoCompleteInput
               label="Supplier"
               options={suppliers}
@@ -78,7 +78,7 @@ const ManagePurchases = () => {
             />
           </div>
 
-          <div className="col col-md-3 form-group">
+          <div className="col col-12 col-md-6 col-xl-3 form-group">
             <FormInput
               label="Purchase Date"
               type="date"
@@ -89,7 +89,7 @@ const ManagePurchases = () => {
             />
           </div>
 
-          <div className="col col-md-3 form-group">
+          <div className="col col-10 col-md-6 col-xl-3 form-group">
             <FormInput
               label="Payment Status"
               type="select"
@@ -100,7 +100,7 @@ const ManagePurchases = () => {
             />
           </div>
 
-          <div className="col col-md-1 form-group">
+          <div className="col col-2 form-group">
             <IconButton
               size="large"
               color="success"

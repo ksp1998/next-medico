@@ -139,9 +139,9 @@ const FormPurchase = ({ purchaseId, btnLabel = "Add Purchase" }: Props) => {
 
   return (
     <Box sx={boxStyle()}>
-      <form className="row" onSubmit={handleSubmit}>
-        <div className="row col col-md-12">
-          <div className="col col-md-3 form-group">
+      <form className="row justify-content-center" onSubmit={handleSubmit}>
+        <div className="row col col-12">
+          <div className="col col-12 col-sm-8 col-lg-4 form-group">
             <AutoCompleteInput
               label="Supplier"
               options={suppliers}
@@ -152,7 +152,7 @@ const FormPurchase = ({ purchaseId, btnLabel = "Add Purchase" }: Props) => {
             />
           </div>
 
-          <div className="col col-md-2 form-group">
+          <div className="col col-6 col-sm-4 col-lg-2 col-xl-2 form-group">
             <FormInput
               label="Invoice Number"
               name="invoiceNumber"
@@ -164,7 +164,7 @@ const FormPurchase = ({ purchaseId, btnLabel = "Add Purchase" }: Props) => {
             />
           </div>
 
-          <div className="col col-md-2 form-group">
+          <div className="col col-6 col-sm-4 col-lg-3 col-xl-2 form-group">
             <FormInput
               label="Payment Status"
               name="paymentStatus"
@@ -176,7 +176,7 @@ const FormPurchase = ({ purchaseId, btnLabel = "Add Purchase" }: Props) => {
               error={purchaseError.paymentStatus}
             />
           </div>
-          <div className="col col-md-2 form-group">
+          <div className="col col-12 col-sm-8 col-lg-3 form-group">
             <FormInput
               label="Date"
               name="date"
@@ -191,8 +191,8 @@ const FormPurchase = ({ purchaseId, btnLabel = "Add Purchase" }: Props) => {
         {/* <!-- customer details content end --> */}
 
         {/* <!-- new user button --> */}
-        <div className="row col col-md-12">
-          <div className="col col-md-2 form-group">
+        <div className="row col col-12">
+          <div className="col col-12 form-group mb-4">
             <AddModal
               btnLabel="New Supplier"
               btnVariant="contained"
@@ -207,7 +207,7 @@ const FormPurchase = ({ purchaseId, btnLabel = "Add Purchase" }: Props) => {
         </div>
         {/* <!-- closing new user button --> */}
 
-        <hr className="my-4" />
+        <hr className="mb-4" />
 
         {/* <!-- start medicines --> */}
         {Object.entries(medicines).map(([key, medicine]) => (
@@ -227,9 +227,8 @@ const FormPurchase = ({ purchaseId, btnLabel = "Add Purchase" }: Props) => {
 
         <hr className="mb-4" />
 
-        <div className="row col col-md-12">
-          <div className="col col-md-10"></div>
-          <div className="col col-md-2 form-group float-end">
+        <div className="row col col-12 justify-content-end">
+          <div className="col col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3 form-group">
             <FormInput
               label="Grand Total"
               value={Object.values(medicines)
@@ -244,15 +243,15 @@ const FormPurchase = ({ purchaseId, btnLabel = "Add Purchase" }: Props) => {
           </div>
         </div>
 
-        <div className="row col col-md-12">
-          <div className="col col-md-10"></div>
-          <div className="col col-md-2 float-end">
+        <div className="row col col-12 justify-content-end">
+          <div className="col col-12">
             <Button
               type="submit"
               variant="contained"
               color="success"
               endIcon={loading && <LoadingIcon />}
               disabled={loading}
+              className="float-end"
             >
               {btnLabel}
             </Button>

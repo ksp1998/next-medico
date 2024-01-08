@@ -28,7 +28,7 @@ const AutoCompleteInput = ({
   error = "",
 }: Props) => {
   return (
-    <div>
+    <div className="mb-4">
       <Autocomplete
         freeSolo={freeSolo}
         noOptionsText={noOptionsText}

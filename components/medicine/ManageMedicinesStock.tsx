@@ -54,7 +54,7 @@ const ManageMedicinesStock = () => {
 
       <Box sx={{ mb: 3, display: "flex" }}>
         <div className="row col col-md-12">
-          <div className="col col-md-3 form-group">
+          <div className="col col-12 col-md-6 col-xl-3 form-group">
             <AutoCompleteInput
               label="Medicine"
               options={medicines}
@@ -73,7 +73,7 @@ const ManageMedicinesStock = () => {
             />
           </div>
 
-          <div className="col col-md-3 form-group">
+          <div className="col col-12 col-md-6 col-xl-3 form-group">
             <AutoCompleteInput
               label="Supplier"
               options={suppliers}
@@ -92,7 +92,7 @@ const ManageMedicinesStock = () => {
             />
           </div>
 
-          <div className="col col-md-2 form-group">
+          <div className="col col-8 col-sm-6 col-md-4 col-lg-3 form-group">
             <Button
               className="w-100"
               variant={params.outOfStock ? "contained" : "outlined"}
@@ -106,7 +106,7 @@ const ManageMedicinesStock = () => {
             </Button>
           </div>
 
-          <div className="col col-md-1 form-group d-none">
+          <div className="col col-2 col-lg-1 form-group d-none">
             <Button
               className="w-100"
               variant={params.expired ? "contained" : "outlined"}

@@ -104,107 +104,107 @@ const InvoiceItemRow = ({
   };
 
   return (
-    <div className="row col col-md-12">
-      <div className="row col col-md-12">
-        <div className="col-md-2">
-          <AutoCompleteInput
-            label="Medicine"
-            noOptionsText="No items"
-            value={item.medicine}
-            setOption={setMedicine}
-            options={medicineOptions}
-            startIcon={<Medication />}
-            error={itemError?.medicine}
-          />
-        </div>
-        <div className="col col-md-2">
-          <AutoCompleteInput
-            label="Batch ID"
-            noOptionsText="No stock"
-            value={item.stock}
-            setOption={setStock}
-            options={batchIdOptions}
-            error={itemError?.stock}
-          />
-        </div>
-        <div className="col col-md-1">
-          <FormInput
-            label="Ava. Qty."
-            type="number"
-            value={item.availableQuantity.toString()}
-            error={itemError?.availableQuantity}
-            disabled={true}
-          />
-        </div>
-        <div className="col col-md-1">
-          <FormInput
-            label="Expiry"
-            value={item.expiry}
-            error={itemError?.expiry}
-            disabled={true}
-          />
-        </div>
-        <div className="col col-md-1">
-          <FormInput
-            label="Quantity"
-            type="number"
-            name="quantity"
-            value={item.quantity.toString()}
-            error={itemError?.quantity}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="col col-md-1">
-          <FormInput
-            label="MRP"
-            type="number"
-            value={item.mrp.toFixed(2)}
-            error={itemError?.mrp}
-            disabled={true}
-          />
-        </div>
-        <div className="col col-md-1">
-          <FormInput
-            label="Discount (%)"
-            type="number"
-            name="discount"
-            value={item.discount.toString(2)}
-            error={itemError?.discount}
-            onChange={handleChange}
-            success={
-              item.discount
-                ? "Discount: " +
-                  ((item.quantity * item.mrp * item.discount) / 100).toFixed(2)
-                : ""
-            }
-          />
-        </div>
-        <div className="col col-md-1">
-          <FormInput
-            label="Amount"
-            type="number"
-            value={(item.quantity * item.mrp).toFixed(2)}
-            disabled={true}
-          />
-        </div>
-        <div className="col col-md-2 d-flex gap-2">
-          <Button
-            variant="contained"
-            sx={{ height: "67.5%" }}
-            onClick={addRowCallback}
-          >
-            <Add />
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{ height: "67.5%" }}
-            onClick={() => removeRowCallback(dataKey)}
-            disabled={disableDeleteButton}
-          >
-            <Delete />
-          </Button>
-        </div>
+    <div className="row col col-12">
+      <div className="col col-12 col-md-4 col-xl-2">
+        <AutoCompleteInput
+          label="Medicine"
+          noOptionsText="No items"
+          value={item.medicine}
+          setOption={setMedicine}
+          options={medicineOptions}
+          startIcon={<Medication />}
+          error={itemError?.medicine}
+        />
+      </div>
+      <div className="col col-8 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+        <AutoCompleteInput
+          label="Batch ID"
+          noOptionsText="No stock"
+          value={item.stock}
+          setOption={setStock}
+          options={batchIdOptions}
+          error={itemError?.stock}
+        />
+      </div>
+      <div className="col col-4 col-sm-3 col-md-2 col-xl-1">
+        <FormInput
+          label="Ava. Qty."
+          type="number"
+          value={item.availableQuantity.toString()}
+          error={itemError?.availableQuantity}
+          disabled={true}
+        />
+      </div>
+      <div className="col col-4 col-sm-3 col-md-2 col-xl-1">
+        <FormInput
+          label="Expiry"
+          value={item.expiry}
+          error={itemError?.expiry}
+          disabled={true}
+        />
+      </div>
+      <div className="col col-4 col-sm-3 col-md-2 col-xl-1">
+        <FormInput
+          label="Quantity"
+          type="number"
+          name="quantity"
+          value={item.quantity.toString()}
+          error={itemError?.quantity}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="col col-4 col-sm-3 col-md-2 col-xl-1">
+        <FormInput
+          label="MRP"
+          type="number"
+          value={item.mrp.toFixed(2)}
+          error={itemError?.mrp}
+          disabled={true}
+        />
+      </div>
+      <div className="col col-4 col-sm-3 col-md-2 col-xl-1">
+        <FormInput
+          label="Discount (%)"
+          type="number"
+          name="discount"
+          value={item.discount.toString(2)}
+          error={itemError?.discount}
+          onChange={handleChange}
+          success={
+            item.discount
+              ? "Discount: " +
+                ((item.quantity * item.mrp * item.discount) / 100).toFixed(2)
+              : ""
+          }
+        />
+      </div>
+      <div className="col col-4 col-sm-3 col-md-2 col-xl-1">
+        <FormInput
+          label="Amount"
+          type="number"
+          value={(item.quantity * item.mrp).toFixed(2)}
+          disabled={true}
+        />
+      </div>
+      <div className="col col-12 col-md-4 col-xl-2 d-flex justify-content-end gap-2">
+        <Button
+          className="py-4"
+          variant="contained"
+          sx={{ height: "67.5%" }}
+          onClick={addRowCallback}
+        >
+          <Add />
+        </Button>
+        <Button
+          className="py-4"
+          variant="contained"
+          color="error"
+          sx={{ height: "67.5%" }}
+          onClick={() => removeRowCallback(dataKey)}
+          disabled={disableDeleteButton}
+        >
+          <Delete />
+        </Button>
       </div>
     </div>
   );

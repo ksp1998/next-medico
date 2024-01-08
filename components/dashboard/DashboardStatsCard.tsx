@@ -38,7 +38,7 @@ const DashboardStatsCard = ({ card }: Props) => {
   }, [card.api]);
 
   return (
-    <div className="col-xs-12 col-sm-6 col-md-6 col-lg-4 p-2">
+    <div className="col-12 col-sm-6 col-md-4 p-2">
       <Link
         className="d-block text-decoration-none p-4 rounded dashboard-stats"
         href={card.href ?? "#"}
