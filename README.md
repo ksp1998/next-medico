@@ -19,15 +19,17 @@ password: Demo@123
 ## Installation Guide
 
 *  Clone the repository to your local machine using the following command: ```git clone REPO_URL```
-*  Install the project dependencies by running either of the following commands: ```npm i``` or ```npm insatll```
-*  Create a `.env` file locally and add the necessary fields as outlined below:
+*  Install the project dependencies by running either of the following commands: ```npm i``` or ```npm install```
+*  Copy the example environment file and fill in your values:
+    ```bash
+    cp .env.example .env.local
+    ```
+*  Update `.env.local` with your credentials:
 
-```
-NODE_ENV='development'
-SITE_URL=YOUR_LIVE_SITE_URL // Optional: Add only if you are hosting it
-MONGODB_URL=YOUR_MONGODB_DATABASE_CLUSTER_URL
-
-NEXTAUTH_URL=YOUR_LIVE_SITE_URL // Either localhost:YOUR_PORT or live site url
-NEXTAUTH_SECRET=NEXT_AUTH_SECRET_KEY
-```
-[Next Auth Environment Variables](https://next-auth.js.org/configuration/options#environment-variables)
+    | Variable | Description |
+    |---|---|
+    | `NODE_ENV` | Set to `development` for local development |
+    | `SITE_URL` | Your live site URL (optional, only needed for production) |
+    | `MONGODB_URL` | Your MongoDB database cluster connection string |
+    | `NEXTAUTH_URL` | `http://localhost:3000` for local or your live site URL |
+    | `NEXTAUTH_SECRET` | A random secret key for NextAuth ([learn more](https://next-auth.js.org/configuration/options#environment-variables)) |
